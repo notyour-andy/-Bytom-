@@ -11,3 +11,8 @@
 &ensp;&ensp;&ensp;&ensp; pip install -r requirements.txt
 
 
+#### 文件目录介绍
+
+* imgs: 网站图片展示
+* znl: 项目文件夹
+* venv: 虚拟环境
