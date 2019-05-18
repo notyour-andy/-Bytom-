@@ -1,0 +1,18 @@
+body {
+  background-image: url(../imgs/listfour.jpg);
+  background-size: 100%;
+  padding-top: 0px;
+}
+
+.logo {
+  font-family: 'Peralta', cursive;
+}
+
+.logo a {
+  color: rgba(0,0,0,.9);
+}
+
+.logo a:hover,
+.logo a:active {
+  text-decoration: none;
+}

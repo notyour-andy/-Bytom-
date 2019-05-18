@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    新闻页面 -> {{block.super}}
+{% endblock title %}
+{% block stylesheet %}
+    {{block.super}}
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/fontawesome-all.min.css" %}">
+    <script src="{% static "js/news.js" %}"></script>
+    <style>
+        .history{
+            background-color: white;
+        }
+        .collection{
+            background-color: white;
+        }
+    </style>
+{% endblock stylesheet %}
+
+
+{% block content %}
+<div class="container">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+
+        <li class="nav-item" >
+          <a class="nav-link active" id="index-tab" data-toggle="tab" href="#index" role="tab" aria-controls="index" aria-selected="true">默认</a>
+        </li>
+
+
+        <li class="nav-item" >
+          <a class="nav-link" id="BiliBili-tab" data-toggle="tab" href="#BiliBili" role="tab" aria-controls="BiliBili" aria-selected="false">B站</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" id="weibo-tab" data-toggle="tab" href="#weibo" role="tab" aria-controls="weibo" aria-selected="false">微博</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="wechat-tab" data-toggle="tab" href="#wechat" role="tab" aria-controls="wechat" aria-selected="false">公众号</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="jianshu-tab" data-toggle="tab" href="#jianshu" role="tab" aria-controls="jianshu" aria-selected="false">简书</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="github-tab" data-toggle="tab" href="#github" role="tab" aria-controls="github" aria-selected="false">Github</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="twitter-tab" data-toggle="tab" href="#twitter" role="tab" aria-controls="twitter" aria-selected="false">Twitter</a>
+        </li>
+
+
+
+	<!-- //banner-bottom1 -->
+	<!-- banner-bottom2 -->
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="index" role="tabpanel" aria-labelledby="index-tab">
+        {% for object in  objects %}
+            
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+
+                    {% if object.source == 'Github' %}
+
+                    <img src="{% static "imgs/github.jpg" %}" class="img-thumbnail img-responsive center-block mt-2" alt="img">
+                        
+                    {% endif %}
+
+                    {% if 'static' in object.img_url %}
+                        {% if object.source == 'Jianshu' %}
+                            <img src="{% static "imgs/jianshu.jpg" %}" class="img-thumbnail img-responsive center-block mt-2" alt="img">
+                        {% elif object.source == 'Weibo' %}
+                            <img src="{% static "imgs/weibo.jpg" %}" class="img-thumbnail img-responsive center-block" style="margin-top:30%" alt="img">
+
+                        {% endif %}
+
+                    {% else %}
+                        <img src="{{object.img_url}}" class= "img-thumbnail img-responsive center-block mt-5 mb-2" alt="img">
+                    {% endif %}
+
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white"><h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a></h3></button>
+                        <hr style="border:none;" ></hr>
+                        
+                        <small class="ml-2">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+        {% if objects.has_other_pages %}
+            <nav aria-lable='News pagination' class="mb-4">
+                <ul class="pagination justify-content-center">
+                    <!--先前页面-->
+                    {% if objects.has_previous %}
+                        <li calss="page-item">
+                            <a class="page-link" href="?page={{objects.previous_page_number}}" ><span style="color:Mediumslateblue"><i class="fas fa-angle-left"></i></span></a>
+                        </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link"><span style="color:Mediumslateblue"><i class="fas fa-angle-left"></i></span></span>
+                    </li>
+                    {% endif %}
+                    <!--当前页面高亮 显示所有页面-->
+                    <!--{% for page_num in objects.paginator.page_range %}
+                        {% if objects.number == page_num %}
+                            <li class="page-item active">
+                            <span class="page-link">
+                            {{ page_num }}
+                            <span class="sr-only">(current)</span>
+                            </span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}-->
+                   <!--后置页面    -->
+                    {% if objects.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{objects.next_page_number}}"><span style="color: Mediumslateblue;"><i class="fas fa-angle-right"></i></span></a>
+                      </li>
+                    {% else %}
+                      <li class="page-item disabled">
+                        <span class="page-link"><span style="color: Mediumslateblue;"><i class="fas fa-angle-right"></i></span></a></span>
+                      </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            
+        {% endif %}
+    
+    </div>
+
+
+    <div class="tab-pane fade" id="BiliBili" role="tabpanel" aria-labelledby="BiliBili-tab">
+        {% for object in news_bilibili %}
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+                        <img src="{{object.img_url}}" class= "img-thumbnail img-responsive center-block mt-5 mb-2" alt="img" >
+
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white"><h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a></h3></button>
+                        <hr style="border:none;" ></hr>
+
+                        <small style="margin-left:8px">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                           
+                        {% endif %}
+
+                        
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+    </div>
+
+    <div class="tab-pane fade" id="weibo" role="tabpanel" aria-labelledby="weibo-tab">
+        {% for object in news_weibo %}
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+
+                    {% if 'static' in object.img_url %}
+                        <img src="{% static "imgs/weibo.jpg" %}" class="img-thumbnail img-responsive center-block" alt="img" style="margin-top:25%">
+
+                    {% else %}
+                        <img src="{{object.img_url}}" class= "img-thumbnail img-responsive center-block mt-5 mb-2" alt="img" >
+                    {% endif %}
+
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white"><h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a>
+                        </h3></button>
+                        <hr style="border:none;"></hr>
+
+
+                        <small class="ml-2">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+        
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+            
+        
+    </div>
+    <div class="tab-pane fade" id='wechat' role="tabpanel" aria-labelledby="wechat-tab">
+        {% for object in news_wechat %}
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+                        <img src="{{object.img_url}}" class= "img-thumbnail img-responsive center-block mt-5 mb-2" alt="img" >
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white"><h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a>
+                        </h3>
+                        </button>
+                        <hr style="border:none;" ></hr>
+
+                        <small class="mr-2">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+ 
+    </div>
+    <div class="tab-pane fade" id="jianshu" role='tabpanel' aria-labelledby="jianshu-tab">
+        {% for object in news_jianshu %}            
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+
+                    {% if 'static' in object.img_url %}
+                        <img src="{% static "imgs/jianshu.jpg" %}" class="img-thumbnail img-responsive center-block mt-2" alt="img">
+
+                    {% else %}
+                        <img src="{{object.img_url}}" class= "img-thumbnail img-responsive center-block mt-5 mb-2" alt="img" >
+                    {% endif %}
+
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white">
+                        <h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a>
+                        </h3>
+                        </button>
+                        <hr style="border:none;" ></hr>
+
+                        <small class="ml-2">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+    </div>
+
+    <div class="tab-pane fade show" id="github" role="tabpanel" aria-labelledby="github-tab">
+        {% for object in  news_github %}
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+                        <img src="{% static "imgs/github.jpg" %}" class="img-thumbnail img-responsive center-block mt-2" alt="img">
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white">
+                        <h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a>
+                        </h3>
+                        </button>
+                        <hr style="border:none;"></hr>
+
+                        <small class="ml-2">
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+
+    </div>
+
+    <div class="tab-pane fade show" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+        {% for object in  news_twitter %}
+        <section>
+            <div class="banner-top row middle-grids">
+                <div class="col-lg-4">
+                        <img src="{{object.img_url}}" class="img-thumbnail img-responsive center-block mt-2" alt="img">
+                </div>
+                
+                <div class="col-lg-8" style="margin-top:8%" id="news_tags">
+                    <div class="advantage_left" data-id="{{object.pk}}" data-user="{{user.id}}">
+                        <button class="history" style="border:none;outline:none;background-color:white">
+                        <h3><a href="{{object.url}}" target="_blank">
+                        {{object.title}}</a>
+                        </h3>
+                        </button>
+                        <hr style="border:none;"></hr>
+
+                        <small class="ml-2">
+                            <span class="mr-4"><i class= "far fa-clock mr-2"></i>{{object.date}}</span>
+                            <span class="mr-4"><i class="far fa-bookmark mr-2"></i>{{object.source}}</span>
+                        {% if object not in news_list %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" >
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+
+                        {% else %}
+                            <button style="border:none; outline:none;background-color:white" class="collection"><span class="cele" style="color:red">
+                            <i class="fas fa-heart"></i></span></button>
+                            </small>
+                           
+                        {% endif %}
+
+
+                    </div> 
+                </div>
+            
+            </div>
+            <hr></hr>
+        </section>
+        {% endfor %}
+
+
+    </div>
+    
+
+
+</div>
+
+
+{% endblock content %}

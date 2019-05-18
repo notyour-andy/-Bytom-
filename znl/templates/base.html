@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+	{% block title %}
+		新闻聚合
+	{% endblock title %}
+	</title>
+	
+	<meta name="referrer" content="never">  <!--微信图片-->
+	<link rel="icon" type="image/png" href="{% static 'imgs/brand.png' %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Peralta">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/base.js' %}"></script>
+
+
+
+	{% block stylesheet %}
+		<link rel="stylesheet" href="{% static "css/base.css" %}">
+	{% endblock stylesheet %}
+</head>
+<body>
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top transparent">
+	<div class="container">
+	  	<a class="navbar-brand" href="{% url 'home' %}"> 
+	  		<img src="{% static "imgs/brand.png" %}" width="36" height="36" class="d-inline-block" alt="brand-image" style="margin-right: 3%;">
+	  		<font color="white">Bytom's News</font>
+	  	</a>
+		<button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="usermenu" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	    </button>
+		<div class="collapse navbar-collapse" id="mainmenu">
+			
+		    <ul class="navbar-nav" style="margin-left:5%;">
+		     <li class="nav-item" >
+		     	<a class="nav-link" href="{% url 'home' %}" id='home'><i class="fas fa-home fa-lg" style="margin-right:5px"></i>Home</a>
+		     </li>
+
+
+		     <li class="nav-item">
+		     	<a class="nav-link" href="{% url 'news' %}" id='news'><i class="fas fa-newspaper fa-lg" style="margin-right:5px"></i>News</a>
+		     </li>
+			 {% if user.is_superuser %}
+		     <li class="nav-item">
+		     	<a class="nav-link" href="{% url 'update' %}" id='update'><i class="fas fa-edit fa-lg" style="margin-right:5px"></i>Update</a>
+		     </li>
+			{%endif%}
+			</ul>
+
+
+			<form class="form-inline my-2 my-lg-0" style= "margin-left:5%" action="/search/" method="get">
+	      		<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" autocomplete="off"  name='query' required>
+	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	    	</form>
+
+			{% if user.is_authenticated %}
+			<ul class="navbar-nav ml-auto"> <!-- ml-auto 往右稍稍-->
+				<li class="nav-item dropdown">           
+				 <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><font color="23A3E3">{{user.username}}</font></a>
+
+		    	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="usermenu">
+		    		<small><a class="dropdown-item" href="{% url 'profile' %}">My account</a></small>
+		    		<small><a class="dropdown-item" href="#">Change password</a></small>
+		    		<div class="dropdown-divider"></div>
+		    		<small><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></small>
+		    	</div>
+
+	    		</li>
+
+	   		</ul>
+
+	    	{% else %}
+				<form class="form-inline ml-auto">
+					<a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+					<a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+				</form>
+
+			{% endif %}
+		</div>
+	</div>
+</nav>	
+
+
+{% endblock body %}
+
+{% block content %}
+{% endblock content %}
+
+
+
+
+</body>
+</html>

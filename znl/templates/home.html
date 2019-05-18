@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    主页 -> {{block.super}}
+{% endblock title %}
+
+
+{% block stylesheet %}
+  
+    {{block.super}}
+    <!--meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Styled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+      Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+      addEventListener("load", function () {
+      	setTimeout(hideURLbar, 0);
+      }, false);
+      
+      function hideURLbar() {
+      	window.scrollTo(0, 1);
+      }
+    </script>
+    <!--//meta tags ends here-->
+    <!--booststrap-->
+    <link href="{% static "css/bootstrap.min.css"%}" rel="stylesheet" type="text/css" media="all">
+    <!--//booststrap end-->
+    <!-- font-awesome icons -->
+    <link href="{% static "css/fontawesome-all.min.css" %}" rel="stylesheet" type="text/css" media="all">
+    <!-- //font-awesome icons -->
+    <!--stylesheets-->
+    <link href="{% static "css/home.css"%}" rel='stylesheet' type='text/css' media="all">
+    <!--//stylesheets-->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet">
+
+
+{% endblock stylesheet %}
+    
+
+{% block content %}
+    <!-- //banner -->
+	<section class="w3l-banner">
+
+		<div class="container">
+			<div class="baner-text text-center">
+				<h3><a href="{% url 'news' %}">Bytom's News Times</a></h3>
+				<h6 class="mx-auto mt-4 pt-2">基于Bytom blockchain的新闻聚合网站</h6>
+				<a class="btn btn-primary mt-lg-5 mt-3 agile-link-bnr scroll " href="#about" role="button">Learn More</a>
+				<div class="banner-high-lights text-center">
+					<div class="rotate">
+						<a href="#about" class="scroll">
+                               <span class="fa fa-arrow-down"></span>    
+						</a>
+                    </div>	
+				</div>
+			</div>
+		</div>
+	</section>
+	 <!-- what we do -->
+	 <section class="wedo py-5" id="about">
+		<div class="container py-lg-5">
+			<div class="text-center">
+				<h3 class="w3_head">涉及站点...</h3>
+			</div>
+			<div class="wedo_top text-center py-5">
+				<ul>
+					<li><span class="fa fa-twitter fa-spin"></span></li>
+					<li><span class="fa fa-weibo fa-spin"></span></li>
+					<li><span class="fa fa-weixin fa-spin"></span></li>
+                    <li><span class="fa fa-github fa-spin"></span></li>
+				</ul>
+             </div>  
+	 </div>
+	</section>
+	 <!-- //what we do -->
+	 <!-- banner-bottom1 -->
+	<section class="banner-bottom" id="news">
+        <div class="banner-top row middle-grids">
+			<div class="col-lg-4 advantage-grid-info1">
+                <div class="advantage_left2 text-center">
+                    <img src="{% static "imgs/listfour.jpg" %}" class="img-fluid" alt="one" style="margin-top: 10%">
+                </div>
+            </div> 
+            <div class="col-lg-8 advantage-grid-info">
+                <div class="advantage_left">
+					<h3>比原链的背景</h3>
+					<p class="mt-4">比原链（Bytom Blockchain Protocol）不会是另外一个比特币, 也不会是以太坊2.0，比原链是从通用型区块链到专业型区块链的阶跃。目前并没有一套完整的、行之有效的区块链协议系统是针对多元化比特资产交易的。
+                    </p>
+				</div>
+            </div>
+        </div>
+    </section>
+	<!-- //banner-bottom1 -->
+	<!-- banner-bottom2 -->
+	 <section class="banner-bottom w3l-btm">
+        <div class="banner-top row middle-grids">
+		    <div class="col-lg-8 advantage-grid-info">
+                 <div class="advantage_left">
+					<h3>比原链的价值</h3>
+					<p class="mt-4">比原链的使命是连通比特世界与原子世界，建造起一个多元化资产的登记、流通的去中心化网络。比原链的目标是成为全球最大的专用型公链平台，探索不同类型资产与区块链的结合，提升资产的流动性、安全性、价值性。</p>
+				</div>
+            </div>
+		<div class="col-lg-4 advantage-grid-info1">
+                <div class="advantage_left2 text-center">
+                    <img src="{% static "imgs/listfive.jpeg"%}" class="img-fluid" alt="two" style="margin-top:10%">
+                </div>
+            </div> 
+        </div>
+    </section>
+	<!-- //banner-bottom2 -->
+	<!-- banner-bottom3 -->
+	 <section class="banner-bottom">
+        <div class="banner-top row middle-grids">
+			<div class="col-lg-4 advantage-grid-info1">
+                <div class="advantage_left2 text-center">
+                    <img src="{% static "imgs/listthree.jpg"%}" class="img-fluid" alt="three" style="margin-top:25%;">
+                </div>
+            </div> 
+            <div class="col-lg-8 advantage-grid-info">
+                 <div class="advantage_left">
+					<h3>比原链的创新</h3>
+					<p class="mt-4">
+                        1.与比特币 UTXO 的设计兼容<br>
+                        2.通用地址格式<br>
+                        3.支持国密标准<br>
+                        4.资产命名采用 ODIN 标识<br>
+                        5.人工智能 ASIC 芯片友好型 POW 算法<br>
+                        6.使用侧链支持跨链资产交易及分红<br>
+                        7.类“隔离见证”设计<br>
+                        8.增强的交易灵活性
+                    </p>
+				</div>
+            </div>
+        </div>
+    </section>
+
+
+	<div class="cpy-right text-center py-5">
+
+			<p class="text-white">© 2019 BYTOM BLOCK CHAIN | Design by
+				<a href="http://w3layouts.com" class="text-white"> TADE_MZYSY</a>
+			</p>
+		</div>
+    <!-- //footer -->
+	
+
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+	<div class="container">
+	<form method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="form-group col-md-4">
+		      <label  for="id_type" style="letter-spacing: 3px;">选择新闻来源</label>
+			  <select class="form-control" id="id_type" name="type">
+			  	<!--<option value="Twitter">Twitter</option> -->
+			  	<option value="Jianshu">Jianshu</option>
+			  	<option value="Weibo">Weibo</option>
+			  	<option value="Wechat">Wechat</option>
+			  	<option value="BiliBili">BiliBili</option>
+				<!--<option value="Huodongxing">Huodongxing</option> -->
+				<option value="Github">GitHub</option>
+			  </select>
+			</div>
+		
+
+		<button type="submit" class="btn  col-md-2 btn-outline-dark " style="border-radius:8px; height:40px; margin-top:30px">update</button>
+		
+		</div>
+
+		
+
+		
+ 	</form>
+ 	</div>
+
+
+{%if datas %}
+		<nav aria-label="breadcrumb" class="text-center">
+  			<ol class="breadcrumb">
+  			<li class="breadcrumb-item">爬取结果</li>
+    		<li class="breadcrumb-item">{{scrapy_type}}</li>
+    		<li class="breadcrumb-item">{{datas|length}}条</li>
+  			</ol>
+		</nav>
+
+
+		<table class="table table-striped">
+		<thead class="thead-dark text-center">
+			<tr>
+				<th>资源标题</th>
+				<th>资源链接</th>
+				<th>发布时间</th>
+			</tr>
+		</thead>
+		<tbody class="text-center">
+			{% for data in datas %}
+			<tr>
+				<td class="align-middle">
+				{{data.1}}	
+				</td>
+				<td class="align-middle">{{data.0}}</td>
+				<td class="align-middle">
+				{{data.2}}
+				</td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+		</table>
+{% endif %}
+
+
+
+
+{% endblock content %}

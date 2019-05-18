@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheet %}
+	{{block.super}}
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+	
+{% endblock stylesheet %}
+{% block content %}
+<nav aria-label="breadcrumb" class="text-center">
+		<ol class="breadcrumb">
+		<li class ="breadcrumb-item">查询结果</li>
+		<li class="breadcrumb-item" >{{keywords}}</li>
+		<li class="breadcrumb-item active">{{objects|length}}条查询结果</li>
+		</ol>
+</nav>
+<ul class="list-group">
+  {% if objects %}
+	  {% for object in objects %}
+	  <li class="list-group-item"><a href="{{object.url}}" target="_blank">{{forloop.counter}}. {{object.title}}</a></li>
+	  {% endfor %}
+  {% else %}
+	  <div class="text-center">无结果</div>
+
+  {%  endif%}
+</ul>
+
+{% endblock content %}
