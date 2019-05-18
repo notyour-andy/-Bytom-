@@ -4,7 +4,7 @@
 
 * Linux或macos系统下
 
-&ensp;&ensp;&ensp;&ensp; 启动虚拟环境:source/venv/activate
+&ensp;&ensp;&ensp;&ensp; 启动虚拟环境:source venv/bin/activate
 
 * 其他
 
