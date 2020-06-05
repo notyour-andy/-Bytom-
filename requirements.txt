@@ -2,7 +2,7 @@ beautifulsoup4==4.7.1
 bs4==0.0.1
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.1.5
+Django==2.2.13
 django-widget-tweaks==1.4.3
 idna==2.8
 lxml==4.3.3
